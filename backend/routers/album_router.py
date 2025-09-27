@@ -6,7 +6,7 @@ from crud import *
 from typing import Annotated
 
 
-router = APIRouter(prefix='/albums', tags=['Albums'])
+router = APIRouter(prefix='/albums', tags=['albums'])
 
 session_dep = Annotated[AsyncSession, Depends(get_session)]
 

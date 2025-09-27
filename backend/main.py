@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from database import crear_db_y_tablas
 from contextlib import asynccontextmanager
-from routers import *
+from routers import artist_router, album_router, customer_router
 
 
 @asynccontextmanager
