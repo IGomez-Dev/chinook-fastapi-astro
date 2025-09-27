@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from database import crear_db_y_tablas
 from contextlib import asynccontextmanager
-from routers import artist_router, album_router, customer_router
+from routers import *
 
 
 @asynccontextmanager
@@ -11,9 +11,11 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title='API Chinook', lifespan=lifespan)
 
-app.include_router(artist_router.router)
-app.include_router(album_router.router)
-app.include_router(customer_router.router)
+app.include_router(album_router)
+app.include_router(artist_router)
+app.include_router(customer_router)
+app.include_router(employee_router)
+app.include_router(customer_router)
 
 @app.get('/')
 async def root():
