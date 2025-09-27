@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_session
 from modelos import Employee, EmployeeCreate, EmployeeUpdate
 from crud import *
@@ -8,23 +8,23 @@ from typing import Annotated
 
 router = APIRouter(prefix='/employees', tags=['employees'])
 
-session_dep = Annotated[Session, Depends(get_session)]
+session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 
-@router.post('/', response_class=Employee, status_code = status.HTTP_201_CREATED)
-def create_employee(employee_data: EmployeeCreate, session: session_dep):
+@router.post('/', response_model=Employee, status_code = status.HTTP_201_CREATED)
+async def create_employee(employee_data: EmployeeCreate, session: session_dep):
   db_employee = Employee.model_validate(employee_data)
-  return create_item(session, db_employee)
+  return await create_item(session, db_employee)
 
 
-@router.get('/', response_class=list[Employee])
-def read_employees(session: session_dep):
-  return get_all_items(session, Employee)
+@router.get('/', response_model=list[Employee])
+async def read_employees(session: session_dep):
+  return await get_all_items(session, Employee)
 
 
 @router.get('/{employee_id}', response_model=Employee)
-def read_employee(employee_id: int, session: session_dep):
-  employee = get_item_by_id(session, Employee, employee_id)
+async def read_employee(employee_id: int, session: session_dep):
+  employee = await get_item_by_id(session, Employee, employee_id)
   if not employee:
     raise HTTPException(
       status_code=404,
@@ -34,24 +34,24 @@ def read_employee(employee_id: int, session: session_dep):
 
 
 @router.put('/{employee_id}', response_model=Employee)
-def update_employee(employee_id: int, employee_data: EmployeeUpdate, session: session_dep):
-  db_employee = get_item_by_id(session, Employee, employee_id)
+async def update_employee(employee_id: int, employee_data: EmployeeUpdate, session: session_dep):
+  db_employee = await get_item_by_id(session, Employee, employee_id)
   if not db_employee:
     raise HTTPException(
       status_code=404,
       detail='Employee no encontrado'
     )
-  update_employee = update_item(session, db_employee, employee_data.model_dump(exclude_unset=True))
-  return update_employee
+  updated_employee = await update_item(session, db_employee, employee_data.model_dump(exclude_unset=True))
+  return updated_employee
 
 
-@router.employee('/{employee_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_employee(employee_id: int, session: session_dep):
-  db_employee = get_item_by_id(session, Employee, employee_id)
+@router.delete('/{employee_id}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_employee(employee_id: int, session: session_dep):
+  db_employee = await get_item_by_id(session, Employee, employee_id)
   if not db_employee:
     raise HTTPException(
       status_code=status.HTTP_404_NOT_FOUND,
       detail='Employee no encontrado'
     )
-  delete_item(session, db_employee)
+  await delete_item(session, db_employee)
   return
