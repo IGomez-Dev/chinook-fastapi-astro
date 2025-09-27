@@ -4,6 +4,7 @@ venv/
 
 # Archivos compilados de Python
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 
