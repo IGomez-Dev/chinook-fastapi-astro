@@ -16,6 +16,8 @@ app.include_router(artist_router)
 app.include_router(customer_router)
 app.include_router(employee_router)
 app.include_router(customer_router)
+app.include_router(genre_router)
+app.include_router(invoice_line_router)
 
 @app.get('/')
 async def root():
