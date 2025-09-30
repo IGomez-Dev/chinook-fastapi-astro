@@ -54,5 +54,5 @@ async def delete_invoice(invoice_id: int, session: session_dep):
       status_code=status.HTTP_404_NOT_FOUND,
       detail='Invoice no encontrado'
     )
-  await delete_item(session, invoice_id)
+  await delete_item(session, invoice)
   return

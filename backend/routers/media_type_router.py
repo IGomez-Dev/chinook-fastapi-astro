@@ -53,5 +53,5 @@ async def delete_media_type(media_type_id: int, session: session_dep):
       status_code=status.HTTP_404_NOT_FOUND,
       detail='Media Type no encontrado'
     )
-  await delete_item(session, media_type_id)
+  await delete_item(session, media_type)
   return
