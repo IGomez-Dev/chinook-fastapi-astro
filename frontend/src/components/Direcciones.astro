@@ -1,0 +1,11 @@
+---
+const { nombre, page } = Astro.props
+---
+
+<a href={`/${page}`}>
+  <div
+    class="text-white font-semibold rounded-lg shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-black/30 backdrop-blur-sm"
+  >
+    {nombre}
+  </div>
+</a>
