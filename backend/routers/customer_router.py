@@ -13,7 +13,7 @@ session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post('/', response_model=Customer, status_code=status.HTTP_201_CREATED)
 async def create_customers(customer_data: CustomerCreate, session: session_dep):
-  db_customer = Customer.model_validate(customer_data)
+  db_customer = Customer(**customer_data.model_dump())
   return await create_item(session, db_customer)
 
 

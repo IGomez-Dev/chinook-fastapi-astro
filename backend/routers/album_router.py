@@ -13,7 +13,7 @@ session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post('/', response_model=Album, status_code=status.HTTP_201_CREATED)
 async def create_album(album_data: AlbumCreate, session: session_dep):
-  db_album = Album.model_validate(album_data)
+  db_album = Album(**album_data.model_dump())
   return await create_item(session, db_album)
 
 

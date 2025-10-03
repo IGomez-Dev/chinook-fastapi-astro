@@ -11,7 +11,7 @@ session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post('/', response_model=Artist, status_code=status.HTTP_201_CREATED)
 async def create_artist(artist_data: ArtistCreate, session: session_dep):
-    db_artist = Artist.model_validate(artist_data)
+    db_artist = Artist(**artist_data.model_dump())
     return await create_item(session, db_artist)
 
 

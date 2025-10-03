@@ -13,7 +13,7 @@ session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post('/', response_model=Employee, status_code = status.HTTP_201_CREATED)
 async def create_employee(employee_data: EmployeeCreate, session: session_dep):
-  db_employee = Employee.model_validate(employee_data)
+  db_employee = Employee(**employee_data.model_dump())
   return await create_item(session, db_employee)
 
 

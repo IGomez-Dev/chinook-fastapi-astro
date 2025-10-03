@@ -5,14 +5,14 @@ from modelos import Track, TrackCreate, TrackUpdate
 from crud import *
 from typing import Annotated
 
-router = APIRouter(prefix='/track', tags=['track'])
+router = APIRouter(prefix='/tracks', tags=['tracks'])
 
 session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 
 @router.post('/', response_model=Track, status_code=status.HTTP_201_CREATED)
 async def create_track(track_data: TrackCreate, session: session_dep):
-  track = Track(**track_data.model_dump)
+  track = Track(**track_data.model_dump())
   return await create_item(session, track)
 
 @router.get('/', response_model=list[Track])

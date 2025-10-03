@@ -13,7 +13,7 @@ session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post('/', response_model=MediaType, status_code=status.HTTP_201_CREATED)
 async def create_media_type(media_type_data: MediaTypeCreate, session: session_dep):
-  media_type = MediaType(**media_type_data.model_dump)
+  media_type = MediaType(**media_type_data.model_dump())
   return await create_item(session, media_type)
 
 

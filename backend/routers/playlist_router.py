@@ -5,14 +5,14 @@ from modelos import Playlist, PlaylistCreate, PlaylistUpdate
 from crud import *
 from typing import Annotated
 
-router = APIRouter(prefix='/playlists', tag=['playlists'])
+router = APIRouter(prefix='/playlists', tags=['playlists'])
 
 session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 
-@router.post('/', response_model=Playlist, status_code=status.HTTP_202_CREATED)
+@router.post('/', response_model=Playlist, status_code=status.HTTP_201_CREATED)
 async def create_playlist(playlist_data: PlaylistCreate, session: session_dep):
-  playlist = Playlist(**playlist_data.model_dump)
+  playlist = Playlist(**playlist_data.model_dump())
   return await create_item(session, playlist)
 
 @router.get('/', response_model=list[Playlist])

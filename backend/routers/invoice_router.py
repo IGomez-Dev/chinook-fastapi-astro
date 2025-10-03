@@ -6,7 +6,7 @@ from crud import *
 from typing import Annotated
 
 
-router = APIRouter(prefix='/invoices', tags=['invoice'])
+router = APIRouter(prefix='/invoices', tags=['invoices'])
 
 
 session_dep = Annotated[AsyncSession, Depends(get_session)]
@@ -14,7 +14,7 @@ session_dep = Annotated[AsyncSession, Depends(get_session)]
 
 @router.post('/', response_model=Invoice, status_code=status.HTTP_201_CREATED)
 async def create_invoice(invoice_data: InvoiceCreate, session: session_dep):
-  invoice = Invoice(**invoice_data.model_dump)
+  invoice = Invoice(**invoice_data.model_dump())
   return await create_item(session, invoice)
 
 

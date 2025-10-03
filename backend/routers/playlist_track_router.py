@@ -5,7 +5,7 @@ from modelos import PlaylistTrack, PlaylistTrackCreate, PlaylistTrackUpdate
 from crud import *
 from typing import Annotated
 
-router = APIRouter(prefix='/playlist_track', tags=['playlist track'])
+router = APIRouter(prefix='/playlist_tracks', tags=['playlist tracks'])
 
 
 session_dep = Annotated[AsyncSession, Depends(get_session)]
