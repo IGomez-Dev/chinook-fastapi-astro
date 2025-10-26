@@ -1,0 +1,64 @@
+---
+export interface Invoice {
+  BillingCity: string;
+  BillingCountry: string;
+  Total: number;
+  CustomerId: number;
+  InvoiceDate: string;
+  BillingAddress: string;
+  BillingState: string | null;
+  BillingPostalCode: string;
+  InvoiceId: number;
+}
+
+const res = await fetch('http://127.0.0.1:8000/invoices/');
+const invoices: Invoice[] = await res.json()
+
+const currencyFormatter = new Intl.NumberFormat('es-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2,
+});
+---
+
+<h2 class="text-white text-3xl font-bold text-center my-6">
+  Lista de Facturas
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {invoices.map((item) => (
+    <div 
+      class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center"
+    >
+      
+      <h3 class="text-3xl text-green-400 font-bold mb-3">
+        {currencyFormatter.format(item.Total)}
+      </h3>
+      
+      <p class="text-sm text-gray-400">
+        Factura ID: {item.InvoiceId}
+      </p>
+      <p class="text-sm text-gray-400 mb-4">
+        Fecha: {new Date(item.InvoiceDate).toLocaleDateString()}
+      </p>
+      
+      <hr class="border-gray-700 my-3" />
+
+      <h4 class="text-md text-gray-200 font-semibold mb-2">Cliente</h4>
+      <p class="text-sm text-gray-300">
+        ID Cliente (FK): {item.CustomerId}
+      </p>
+      
+      <h4 class="text-md text-gray-200 font-semibold mt-4 mb-2">Dirección de Cobro</h4>
+      <p class="text-xs text-gray-300">
+        {item.BillingAddress}
+      </p>
+      <p class="text-xs text-gray-300">
+        {item.BillingCity}, {item.BillingState ?? ''} {item.BillingPostalCode}
+      </p>
+      <p class="text-xs text-gray-300">
+        {item.BillingCountry}
+      </p>
+    </div>
+  ))}
+</div>

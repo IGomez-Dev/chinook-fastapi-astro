@@ -1,0 +1,67 @@
+---
+export interface Customer {
+  LastName: string;
+  FirstName: string;
+  Address: string;
+  State: string | null;
+  PostalCode: string | null;
+  Fax: string | null;
+  CustomerId: number;
+  Company: string | null;
+  City: string;
+  Country: string;
+  Phone: string | null;
+  Email: string;
+  SupportRepId: number;
+}
+
+const res = await fetch("http://127.0.0.1:8000/customers/"); 
+const customers: Customer[] = await res.json();
+---
+
+<h2 class="text-white text-3xl font-bold text-center my-6">
+  Lista de Clientes
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {customers.map((item) => (
+    <div 
+      class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-left bg-slate-900/60 backdrop-blur-sm self-center"
+    >
+      
+      <h3 class="text-xl text-white font-bold">
+        {item.FirstName} {item.LastName}
+      </h3>
+      <p class="text-sm text-indigo-300 border-b border-gray-700 pb-3 mb-3">
+        {item.Company ?? 'Particular'}
+      </p>
+
+      <div class="space-y-1 text-sm text-gray-300">
+        <p>
+          <span class="font-semibold text-gray-200">Email:</span> {item.Email}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-200">Teléfono:</span> {item.Phone ?? 'N/A'}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-200">Fax:</span> {item.Fax ?? 'N/A'}
+        </p>
+      </div>
+
+      <hr class="border-gray-700 my-3" />
+
+      <div class="space-y-1 text-xs text-gray-400">
+        <p>{item.Address}</p>
+        <p>
+          {item.City}, {item.State ?? ''} {item.PostalCode ?? ''}
+        </p>
+        <p>{item.Country}</p>
+      </div>
+      
+      <div class="mt-4 pt-3 border-t border-gray-800 flex justify-between text-xs text-gray-500">
+        <p>ID (PK): {item.CustomerId}</p>
+        <p>Rep. Soporte: {item.SupportRepId}</p>
+      </div>
+    </div>
+  ))}
+</div>

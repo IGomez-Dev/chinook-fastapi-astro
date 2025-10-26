@@ -1,0 +1,44 @@
+---
+export interface MediaType {
+  MediaTypeId: number;
+  Name: string;
+}
+
+
+const reloadPage = () => {
+    if (typeof window !== 'undefined') {
+        window.location.reload();
+    }
+};
+
+const res = await fetch('http://127.0.0.1:8000/media_types/');
+const playlists: MediaType[] = await res.json();
+
+const mediaTypeFields = [
+    { name: 'name', label: 'Nombre del Tipo de Medio', type: 'text' },
+];
+
+import GenericPostModal from '../GenericPostModal.jsx';
+---
+
+<h2 class="text-3xl font-bold text-white text-center my-6">
+  Lista de Tipos de Medio
+</h2>
+
+<div class="text-center mb-8">
+  <GenericPostModal 
+    endpoint="/media_types/" 
+    formFields={mediaTypeFields} 
+    onSuccess={reloadPage}
+    client:load 
+  />
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {playlists.map((item) => (
+    <div class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center">
+      <p class="text-sm text-gray-400">ID (PK): {item.MediaTypeId}</p>
+      <h3 class="text-xl text-white font-semibold">{item.Name}</h3>
+    </div>
+  ))}
+</div>

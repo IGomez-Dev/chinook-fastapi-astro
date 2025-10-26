@@ -1,0 +1,76 @@
+---
+export interface Employee {
+  EmployeeId: number;
+  LastName: string;
+  FirstName: string;
+  Title: string;
+  ReportsTo: number | null;
+  BirthDate: string;
+  HireDate: string;
+  Address: string;
+  City: string;
+  State: string | null;
+  Country: string;
+  PostalCode: string | null;
+  Phone: string;
+  Fax: string | null;
+  Email: string;
+}
+
+const res = await fetch("http://127.0.0.1:8000/employees/");
+const items: Employee[] = await res.json();
+---
+
+<h2 class="text-white text-3xl font-bold text-center my-6">
+  Directorio de Empleados
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {items.map((item) => (
+    <div 
+      class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-left bg-slate-900/60 backdrop-blur-sm my-4"
+    >
+      <h4 class="text-xs text-gray-500 mb-2">ID (PK): {item.EmployeeId}</h4>
+      <h3 class="text-xl text-white font-bold mb-1">
+        {item.FirstName} {item.LastName}
+      </h3>
+      <p class="text-sm text-indigo-300 border-b border-gray-700 pb-3 mb-3">
+        {item.Title}
+      </p>
+
+      <div class="space-y-1 text-sm text-gray-300">
+        <p>
+          <span class="font-semibold text-gray-200">Jefe (ID):</span> {item.ReportsTo ?? 'N/A'}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-200">Contratación:</span> {new Date(item.HireDate).toLocaleDateString()}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-200">Nacimiento:</span> {new Date(item.BirthDate).toLocaleDateString()}
+        </p>
+      </div>
+      
+      <hr class="border-gray-700 my-4" />
+
+      <div class="space-y-1 text-xs text-gray-400">
+        <p>
+          <span class="font-semibold text-gray-300">Email:</span> {item.Email}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-300">Teléfono:</span> {item.Phone}
+        </p>
+        <p>
+          <span class="font-semibold text-gray-300">Fax:</span> {item.Fax ?? 'N/A'}
+        </p>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-gray-800 text-xs text-gray-500">
+        <p>{item.Address}</p>
+        <p>
+          {item.City}, {item.State ?? ''} {item.PostalCode ?? ''}
+        </p>
+        <p>{item.Country}</p>
+      </div>
+    </div>
+  ))}
+</div>

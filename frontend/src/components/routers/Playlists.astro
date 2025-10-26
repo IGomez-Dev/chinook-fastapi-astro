@@ -1,0 +1,22 @@
+---
+export interface Playlist {
+  PlaylistId: number;
+  Name: string;
+}
+
+const res = await fetch('http://127.0.0.1:8000/playlists/');
+const playlists: Playlist[] = await res.json();
+---
+
+<h2 class="text-3xl font-bold text-white text-center my-6">
+  Lista de Repoduccción
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {playlists.map((item) => (
+    <div class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center">
+      <p class="text-sm text-gray-400">ID (PK): {item.PlaylistId}</p>
+      <h3 class="text-xl text-white font-semibold">{item.Name}</h3>
+    </div>
+  ))}
+</div>

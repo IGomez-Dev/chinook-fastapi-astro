@@ -1,0 +1,22 @@
+---
+export interface MediaType {
+  TrackId: number;
+  PlaylistId: number;
+}
+
+const res = await fetch('http://127.0.0.1:8000/playlist_tracks/');
+const playlists: MediaType[] = await res.json();
+---
+
+<h2 class="text-3xl font-bold text-white text-center my-6">
+  Pista de Lista de Reproducción
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {playlists.map((item) => (
+    <div class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center">
+      <h3 class="text-sm text-white font-semibold">Playlist ID (FK): {item.PlaylistId}</h3>
+      <h3 class="text-sm text-white font-semibold">Track ID (FK): {item.TrackId}</h3>
+    </div>
+  ))}
+</div>

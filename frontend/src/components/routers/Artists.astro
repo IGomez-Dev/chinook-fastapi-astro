@@ -1,0 +1,17 @@
+---
+const res = await fetch("http://127.0.0.1:8000/artists/");
+const users: { ArtistId: number | string; Name: string }[] = await res.json();
+---
+
+<h2 class="text-white text-3xl font-bold text-center my-6">
+  Artistas
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {users.map((user) => (
+    <div class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center">
+      <h4 class="text-sm text-gray-400">ID (PK): {user.ArtistId}</h4>
+      <h3 class="text-lg text-white font-semibold">{user.Name}</h3>
+    </div>
+  ))}
+</div>
