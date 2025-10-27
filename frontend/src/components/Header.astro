@@ -10,7 +10,15 @@ import DireccionesComponent from "./Direcciones.astro"
 
 <main class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6">
   <DireccionesComponent nombre="inicio" page=""/>
-  <DireccionesComponent nombre="artistas" page="artists"/>
-  <DireccionesComponent nombre="albums" page="albums"/>
-  <DireccionesComponent nombre="géneros" page="genres"/>
+  <DireccionesComponent nombre="artistas" page="artists/get"/>
+  <DireccionesComponent nombre="albums" page="albums/get"/>
+  <DireccionesComponent nombre="géneros" page="genres/get"/>
+  <DireccionesComponent nombre="pistas" page="tracks/get"/>
+  <DireccionesComponent nombre="empleados" page="employees/get"/>
+  <DireccionesComponent nombre="clientes" page="customers/get"/>
+  <DireccionesComponent nombre="facturas" page="invoices/get"/>
+  <DireccionesComponent nombre="detalle de las facturas" page="invoicelines/get"/>
+  <DireccionesComponent nombre="lista de reproducción" page="playlists/get"/>
+  <DireccionesComponent nombre="tipo de medio" page="mediatypes/get"/>
+  <DireccionesComponent nombre="pistas de reproducción" page="playlisttracks/get"/>
 </main>

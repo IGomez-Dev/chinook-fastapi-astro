@@ -1,8 +1,14 @@
 from fastapi import FastAPI
 from database import crear_db_y_tablas
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from routers import *
 
+origins = [
+    "http://localhost",
+    "http://localhost:4321", # Puerto de desarrollo de Astro (Común)
+    "http://127.0.0.1:4321", # Por si acaso
+]
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -10,6 +16,14 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title='API Chinook', lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins, 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(album_router)
 app.include_router(artist_router)

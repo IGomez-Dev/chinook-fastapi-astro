@@ -1,0 +1,87 @@
+---
+// ... (Tus props y clases CSS aquí, sin cambios) ...
+interface Props {
+  titulo: string;
+  textoBoton: string;
+  action: string;
+  urlCancelar: string; 
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+}
+
+const {
+  titulo,
+  textoBoton,
+  action,
+  urlCancelar, 
+  method = 'POST'
+} = Astro.props;
+
+const botonAceptarClases = "text-white font-bold py-2 px-4 rounded-2xl bg-green-600 hover:bg-green-700 transition";
+const botonCancelarClases = "text-white font-bold py-2 px-4 rounded-2xl bg-red-600 hover:bg-red-700 transition";
+const contenedorBotonesClases = "flex justify-end space-x-4 pt-4 border-t mt-6";
+---
+
+<div class="max-w-xl mx-auto p-6 bg-white shadow-xl rounded-lg">
+  <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-2">
+    {titulo}
+  </h2>
+
+  <form id="albumForm"> 
+    <slot />
+
+    <div class={contenedorBotonesClases}>
+      <a href={urlCancelar} class={botonCancelarClases} role="button">
+        Cancelar
+      </a>
+      <button type="submit" class={botonAceptarClases} data-action={action} data-method={method}>
+        {textoBoton}
+      </button>
+    </div>
+  </form>
+</div>
+<script is:inline>
+  // El código JavaScript se encarga del manejo del formulario y la solicitud fetch.
+  const form = document.getElementById('albumForm');
+  const submitButton = form?.querySelector('button[type="submit"]');
+
+  if (form && submitButton) {
+    const actionUrl = submitButton.getAttribute('data-action');
+    const method = submitButton.getAttribute('data-method') || 'POST';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); 
+      
+      const formData = new FormData(form);
+      const data = {};
+      
+      // Convertir FormData a un objeto JavaScript simple
+      formData.forEach((value, key) => (data[key] = value));
+
+      try {
+        const response = await fetch(actionUrl, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json', // Clave para FastAPI
+          },
+          body: JSON.stringify(data),
+        });
+        
+        // --- INICIO Manejo de la Respuesta (Lo que faltaba) ---
+        if (response.ok) {
+          alert('Álbum creado exitosamente. Redireccionando...');
+          // Redirecciona después del éxito si deseas:
+          // window.location.href = submitButton.getAttribute('data-cancelar-url') || '/'; 
+        } else {
+          const errorData = await response.json();
+          // Muestra el mensaje de error de FastAPI
+          alert(`Error al crear el álbum: ${JSON.stringify(errorData.detail || errorData)}`);
+        }
+        // --- FIN Manejo de la Respuesta ---
+
+      } catch (error) {
+        console.error('Error de red o del servidor:', error);
+        alert('Ocurrió un error inesperado al enviar los datos.');
+      }
+    });
+  }
+</script>

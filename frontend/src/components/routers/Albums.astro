@@ -1,18 +1,24 @@
 ---
 const res = await fetch("http://127.0.0.1:8000/albums/");
 const users: { ArtistId: number ; Title: string; AlbumId: number }[] = await res.json();
+
+import AddComponent from '../button/ButtonAñadir.astro'
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
   Lista de Albums
 </h2>
 
+<AddComponent item="Album" page="albums"/>
+
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {users.map((item) => (
-    <div class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center">
-      <h4 class="text-sm text-gray-400">ID (PK): {item.AlbumId}</h4>
-      <h3 class="text-lg text-white font-semibold">{item.Title}</h3>
-      <h4 class="text-sm text-gray-400">ArtistId (FK): {item.ArtistId}</h4>
-    </div>
+    <a href={`/albums/get/${item.AlbumId}`} class="contents"> 
+      <div class="border border-gray-600 rounded-lg p-6 shadow hover:shadow-lg hover:scale-105 transition transform duration-200 text-center bg-slate-900/60 backdrop-blur-sm self-center cursor-pointer">
+        <h4 class="text-sm text-gray-400">ID (PK): {item.AlbumId}</h4>
+        <h3 class="text-lg text-white font-semibold">{item.Title}</h3>
+        <h4 class="text-sm text-gray-400">ArtistId (FK): {item.ArtistId}</h4>
+      </div>
+    </a>
   ))}
 </div>
