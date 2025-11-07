@@ -1,11 +1,22 @@
 ---
 const res = await fetch("http://127.0.0.1:8000/artists/");
 const users: { ArtistId: number | string; Name: string }[] = await res.json();
+
+import Button from "../Button.astro";
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
-  Artistas
+  Lista de Artistas
 </h2>
+
+<Button
+  namecreate="Crear Artista"
+  pagecreate="http://127.0.0.1:8000/docs#/artists/create_artist_artists__post"
+  nameupdate="Actualizar Artista"
+  pageupdate="http://127.0.0.1:8000/docs#/artists/update_artist_artists__artist_id__put"
+  namedelete="Eliminar Artista"
+  pagedelete="http://127.0.0.1:8000/docs#/artists/delete_artist_artists__artist_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {users.map((user) => (

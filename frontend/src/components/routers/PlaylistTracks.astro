@@ -6,11 +6,22 @@ export interface MediaType {
 
 const res = await fetch('http://127.0.0.1:8000/playlist_tracks/');
 const playlists: MediaType[] = await res.json();
+
+import Button from '../Button.astro'
 ---
 
 <h2 class="text-3xl font-bold text-white text-center my-6">
-  Pista de Lista de Reproducción
+  Lista de Pista de Reproducciones
 </h2>
+
+<Button
+  namecreate="Crear Pista de Reproducción"
+  pagecreate="http://127.0.0.1:8000/docs#/playlist%20tracks/create_playlist_track_playlist_tracks__post"
+  nameupdate="Actualizar Pista de Reproducción"
+  pageupdate="http://127.0.0.1:8000/docs#/playlist%20tracks/update_playlist_track_playlist_tracks__playlist_track_id__put"
+  namedelete="Eliminar Pista de Reproducción"
+  pagedelete="http://127.0.0.1:8000/docs#/playlist%20tracks/delete_playlist_track_playlist_tracks__playlist_track_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {playlists.map((item) => (

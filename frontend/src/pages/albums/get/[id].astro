@@ -1,0 +1,24 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import AlbumsIDComponent from '../../../components/routers/AlbumsID.astro';
+
+interface Album {
+  AlbumId: number;
+}
+
+export async function getStaticPaths() {
+  const res = await fetch("http://127.0.0.1:8000/albums/");
+  const albums = await res.json();
+
+  return albums.map((album: Album) => ({
+    params: { id: album.AlbumId.toString() },
+    props: { album },
+  }));
+}
+
+const { album } = Astro.props;
+---
+
+<Layout>
+  <AlbumsIDComponent album={album} />
+</Layout>

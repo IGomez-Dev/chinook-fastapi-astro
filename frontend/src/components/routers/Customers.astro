@@ -17,11 +17,23 @@ export interface Customer {
 
 const res = await fetch("http://127.0.0.1:8000/customers/"); 
 const customers: Customer[] = await res.json();
+
+import Button from "../Button.astro";
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
   Lista de Clientes
 </h2>
+
+<Button
+  namecreate="Crear Cliente"
+  pagecreate="http://127.0.0.1:8000/docs#/customers/create_customers_customers__post"
+  nameupdate="Actualizar Cliente"
+  pageupdate="http://127.0.0.1:8000/docs#/customers/update_customer_customers__customer_id__put"
+  namedelete="Eliminar Cliente"
+  pagedelete="http://127.0.0.1:8000/docs#/customers/delete_customer_customers__customer_id__delete"
+/>
+
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {customers.map((item) => (

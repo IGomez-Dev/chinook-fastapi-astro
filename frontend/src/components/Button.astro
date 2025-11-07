@@ -1,0 +1,57 @@
+---
+const { 
+  nameupdate, 
+  namedelete, 
+  namecreate, 
+  pageupdate, 
+  pagedelete, 
+  pagecreate 
+} = Astro.props;
+---
+
+<div class="flex flex-wrap gap-4 justify-center mb-8">
+  <a
+    href={pagecreate}
+    target="_blank"
+    aria-label={`Ir a ${namecreate}`}
+    class="inline-flex items-center gap-2 bg-emerald-600 text-white font-medium px-5 py-2.5 
+           rounded-xl shadow-md hover:bg-emerald-700 hover:shadow-lg 
+           focus:outline-none focus:ring-4 focus:ring-emerald-300 
+           transition-all duration-200 ease-in-out"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    <span>{namecreate}</span>
+  </a>
+
+  <a
+    href={pageupdate}
+    target="_blank"
+    aria-label={`Ir a ${nameupdate}`}
+    class="inline-flex items-center gap-2 bg-yellow-600 text-white font-medium px-5 py-2.5 
+           rounded-xl shadow-md hover:bg-yellow-700 hover:shadow-lg 
+           focus:outline-none focus:ring-4 focus:ring-yellow-300 
+           transition-all duration-200 ease-in-out"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4h2m2 0h-6m9 8H6m9 8H9" />
+    </svg>
+    <span>{nameupdate}</span>
+  </a>
+
+  <a
+    href={pagedelete}
+    target="_blank"
+    aria-label={`Ir a ${namedelete}`}
+    class="inline-flex items-center gap-2 bg-rose-600 text-white font-medium px-5 py-2.5 
+           rounded-xl shadow-md hover:bg-rose-700 hover:shadow-lg 
+           focus:outline-none focus:ring-4 focus:ring-rose-300 
+           transition-all duration-200 ease-in-out"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+    <span>{namedelete}</span>
+  </a>
+</div>

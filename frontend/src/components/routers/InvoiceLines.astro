@@ -9,11 +9,22 @@ export interface InvoiceLines {
 
 const res = await fetch('http://127.0.0.1:8000/invoice_lines/');
 const invoicelines: InvoiceLines[] = await res.json()
+
+import Button from '../Button.astro';
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
   Lista de Detalles de Facturas
 </h2>
+
+<Button
+  namecreate="Crear Detalle de Factura"
+  pagecreate="http://127.0.0.1:8000/docs#/invoice%20lines/create_invoice_line_invoice_lines__post"
+  nameupdate="Actualizar Detalle de Factura"
+  pageupdate="http://127.0.0.1:8000/docs#/invoice%20lines/update_invoice_line_invoice_lines__invoice_line_id__put"
+  namedelete="Eliminar Detalle de Factura"
+  pagedelete="http://127.0.0.1:8000/docs#/invoice%20lines/delete_invoice_line_invoice_lines__invoice_line_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {invoicelines.map((item) => (

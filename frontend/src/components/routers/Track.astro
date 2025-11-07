@@ -26,11 +26,22 @@ const formatBytes = (bytes: number): string => {
   if (bytes < 1024) return `${bytes} B`;
   return `${(bytes / 1024 / 1024).toFixed(2)} MB`; 
 };
+
+import Button from '../Button.astro'
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
   Catálogo de Pistas de Música
 </h2>
+
+<Button
+  namecreate="Crear Pista de Música"
+  pagecreate="http://127.0.0.1:8000/docs#/tracks/create_track_tracks__post"
+  nameupdate="Actualizar Pista de Música"
+  pageupdate="http://127.0.0.1:8000/docs#/tracks/update_track_tracks__track_id__put"
+  namedelete="Eliminar Pista de Música"
+  pagedelete="http://127.0.0.1:8000/docs#/tracks/delete_track_tracks__track_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {items.map((item) => (

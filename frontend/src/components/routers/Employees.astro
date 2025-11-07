@@ -19,11 +19,22 @@ export interface Employee {
 
 const res = await fetch("http://127.0.0.1:8000/employees/");
 const items: Employee[] = await res.json();
+
+import Button from "../Button.astro";
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
-  Directorio de Empleados
+  Lista de Empleados
 </h2>
+
+<Button
+  namecreate="Crear Empleado"
+  pagecreate="http://127.0.0.1:8000/docs#/employees/create_employee_employees__post"
+  nameupdate="Actualizar Empleado"
+  pageupdate="http://127.0.0.1:8000/docs#/employees/update_employee_employees__employee_id__put"
+  namedelete="Eliminar Empleado"
+  pagedelete="http://127.0.0.1:8000/docs#/employees/delete_employee_employees__employee_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {items.map((item) => (

@@ -2,11 +2,22 @@
 const res = await fetch("http://127.0.0.1:8000/genres/");
 const items: { GenreId: number; Name: string }[] = await res.json();
 console.log()
+
+import Button from '../Button.astro';
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
   Géneros
 </h2>
+
+<Button
+  namecreate="Crear Género"
+  pagecreate="http://127.0.0.1:8000/docs#/genres/create_genre_genres__post"
+  nameupdate="Actualizar Género"
+  pageupdate="http://127.0.0.1:8000/docs#/genres/update_genre_genres__genre_id__put"
+  namedelete="Eliminar Género"
+  pagedelete="http://127.0.0.1:8000/docs#/genres/delete_genre_genres__genre_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {items.map((item) => (

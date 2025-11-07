@@ -2,14 +2,21 @@
 const res = await fetch("http://127.0.0.1:8000/albums/");
 const users: { ArtistId: number ; Title: string; AlbumId: number }[] = await res.json();
 
-import AddComponent from '../button/ButtonAñadir.astro'
+import Button from '../Button.astro';
 ---
 
 <h2 class="text-white text-3xl font-bold text-center my-6">
   Lista de Albums
 </h2>
 
-<AddComponent item="Album" page="albums"/>
+<Button
+  namecreate="Crear Álbum"
+  pagecreate="http://127.0.0.1:8000/docs#/albums/create_album_albums__post"
+  nameupdate="Actualizar Álbum"
+  pageupdate="http://127.0.0.1:8000/docs#/albums/update_album_albums__album_id__put"
+  namedelete="Eliminar Álbum"
+  pagedelete="http://127.0.0.1:8000/docs#/albums/delete_album_albums__album_id__delete"
+/>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {users.map((item) => (
